@@ -1,0 +1,11 @@
+.idea/
+.classpath
+.metadata/
+.project
+.settings/
+target/
+build/
+tinycalculator/
+*.class
+*.swp
+*.iml
