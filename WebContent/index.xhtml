@@ -13,13 +13,34 @@
             Michael's book list
         </header>
         <main>
-            Main Content goes here
+            <h1>Edit categories</h1>
+            <h:form>
+                <h:dataTable value="#{categoryEditor.categories}" var="cat">
+                    <h:column>
+                        <h:commandLink
+                            action="#{categoryEditor.deleteCategory(cat)}">
+                            <span>Remove</span>
+                        </h:commandLink>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{cat.name}"/>
+                    </h:column>
+                </h:dataTable>
+                <h:commandLink styleClass="button"
+                               value="Add category"
+                               action="#{categoryEditor.addCategory}"/>
+                <h:commandLink styleClass="button"
+                               value="Save"
+                               action="#{categoryEditor.save}"/>
+            </h:form>
         </main>
         <nav>
             this is the navigation
         </nav>
         <footer>
-            this is the footer
+            Michael Muller |
+            <h:outputLink value="http://blog.mueller-bruehl.de">Michael's blog</h:outputLink>
+            | <h:link value="About" outcome="index.xhtml"/>
         </footer>
     </div>
 </h:body>
