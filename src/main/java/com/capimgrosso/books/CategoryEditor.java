@@ -31,6 +31,7 @@ public class CategoryEditor {
 
     public String deleteCategory(Category category) {
         _categories.remove(category);
+        _logger.log(Level.INFO, "Remove categories: {0}", _categories);
         return "";
     }
 
@@ -48,7 +49,6 @@ public class CategoryEditor {
                 .filter(cat -> !cat.getName().isEmpty())
                 .map(cat -> cat.toString())
                 .collect(Collectors.joining(", "));
-
         _logger.log(Level.INFO, "Save categories: {0}", categories);
         return "";
     }
