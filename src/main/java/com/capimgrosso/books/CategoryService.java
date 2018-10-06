@@ -1,32 +1,25 @@
-package main.java.com.capimgrosso.books;
+package com.capimgrosso.books;
 
-import main.java.com.capimgrosso.books.entity.Category;
+import com.capimgrosso.books.entity.Category;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.*;
+import javax.transaction.RollbackException;
 import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
 public class CategoryService implements Serializable {
-    @PersistenceUnit(unitName= "booksPU")
-    private EntityManagerFactory emf;
+    @PersistenceContext(unitName = "booksPU", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
-    @Resource
-    UserTransaction tx;
+    //private EntityManagerFactory emf;
 
     @PostConstruct
     void init(){
-        em = emf.createEntityManager();
+        //em = emf.createEntityManager();
     }
 
     protected EntityManager getEntityManager(){

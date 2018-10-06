@@ -1,4 +1,4 @@
-package main.java.com.capimgrosso.books.entity;
+package com.capimgrosso.books.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

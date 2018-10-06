@@ -1,9 +1,8 @@
-package main.java.com.capimgrosso.books;
+package com.capimgrosso.books;
 
-import main.java.com.capimgrosso.books.entity.Category;
+import com.capimgrosso.books.entity.Category;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Named
+@Named("categoryEditor")
 @SessionScoped
 public class CategoryEditor implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -25,7 +24,7 @@ public class CategoryEditor implements Serializable {
     private CategoryService categoryService;
 
     @PostConstruct
-    private void init(){
+    public void init(){
         categories = categoryService.findAll();
         deletedCategories = new ArrayList<>();
     }
