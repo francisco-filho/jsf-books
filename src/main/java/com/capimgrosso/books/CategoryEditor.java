@@ -1,54 +1,64 @@
 package main.java.com.capimgrosso.books;
 
+import main.java.com.capimgrosso.books.entity.Category;
+
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-@ManagedBean(name = "categoryEditor")
+@Named
 @SessionScoped
-public class CategoryEditor {
+public class CategoryEditor implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger _logger =Logger.getLogger("CategoryEditor");
+    private List<Category> categories;
+    private List<Category> deletedCategories;
 
-    private List<Category> _categories;
+    @Inject
+    private CategoryService categoryService;
 
     @PostConstruct
     private void init(){
-        _categories = new ArrayList<>();
-        _categories.add(new Category(){{setId(1); setName("Java");}});
-        _categories.add(new Category(){{setId(2); setName("Web");}});
+        categories = categoryService.findAll();
+        deletedCategories = new ArrayList<>();
     }
 
     public String addCategory(){
-        _categories.add(new Category());
+        categories.add(new Category());
         return "";
     }
 
     public String deleteCategory(Category category) {
-        _categories.remove(category);
-        _logger.log(Level.INFO, "Remove categories: {0}", _categories);
+        if (category.getId() >=0){
+            deletedCategories.add(category);
+        }
+        _logger.log(Level.INFO, "Remove categories: {0}", deletedCategories);
         return "";
     }
 
     public List<Category> getCategories() {
-        return _categories;
+        return categories;
     }
 
     public void setCategories(List<Category> _categories) {
-        this._categories = _categories;
+        this.categories = _categories;
     }
 
     public String save(){
-        String categories = _categories
-                .stream()
-                .filter(cat -> !cat.getName().isEmpty())
-                .map(cat -> cat.toString())
-                .collect(Collectors.joining(", "));
+        for (Category c : categories) {
+            categoryService.save(c);
+        }
+        for (Category d: deletedCategories){
+            categoryService.delete(d);
+        }
+        deletedCategories = new ArrayList<>();
         _logger.log(Level.INFO, "Save categories: {0}", categories);
         return "";
     }

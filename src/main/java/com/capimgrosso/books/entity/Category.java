@@ -1,18 +1,19 @@
-package main.java.com.capimgrosso.books;
+package main.java.com.capimgrosso.books.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(schema = "books")
+@Table(schema = "books", name="category")
 public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="cat_id")
     private int id;
 
-    @Column(name="name")
+    @Column(name="cat_name")
     private String name;
 
     public int getId() {
