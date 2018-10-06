@@ -2,12 +2,11 @@ package com.capimgrosso.books;
 
 import com.capimgrosso.books.entity.Category;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.*;
-import javax.transaction.RollbackException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,24 +14,13 @@ import java.util.List;
 public class CategoryService implements Serializable {
     @PersistenceContext(unitName = "booksPU", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
-    //private EntityManagerFactory emf;
-
-    @PostConstruct
-    void init(){
-        //em = emf.createEntityManager();
-    }
 
     protected EntityManager getEntityManager(){
         return em;
     }
 
-    public Category create(Category entity) throws SystemException, NotSupportedException, HeuristicRollbackException, HeuristicMixedException, RollbackException {
-        //em.getTransaction().begin();
-
-        //tx.begin();
+    public Category create(Category entity){
         getEntityManager().persist(entity);
-        //tx.commit();
-        //em.getTransaction().commit();
         return entity;
     }
 
@@ -41,9 +29,7 @@ public class CategoryService implements Serializable {
     }
 
     public Category update(Category entity){
-        //em.getTransaction().begin();
         Category result = getEntityManager().merge(entity);
-        //em.getTransaction().commit();
         return result;
     }
 
@@ -52,23 +38,10 @@ public class CategoryService implements Serializable {
     }
 
     public Category save(Category entity){
-        try {
-            if (entity.getId() < 0){
-                return create(entity);
-            }
+        if (entity.getId() < 0){
             return create(entity);
-        } catch (NotSupportedException e) {
-            e.printStackTrace();
-        } catch (SystemException e) {
-            e.printStackTrace();
-        } catch (RollbackException e) {
-            e.printStackTrace();
-        } catch (HeuristicMixedException e) {
-            e.printStackTrace();
-        } catch (HeuristicRollbackException e) {
-            e.printStackTrace();
         }
-        return null;
+        return update(entity);
     }
 
     public List<Category> findAll(){
