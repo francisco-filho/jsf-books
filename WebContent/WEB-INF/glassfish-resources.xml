@@ -7,13 +7,13 @@
                           validation-classname="org.glassfish.api.jdbc.validation.PostgresConnectionValidation" is-connection-validation-required="true"
                           connection-validation-method="custom-validation"
                           res-type="javax.sql.XADataSource">
-    <property name="serverName" value="localhost"/>
-        <property name="portNumber" value="5432"/>
-        <property name="databaseName" value="portal"/>
-        <property name="User" value="postgres"/>
-        <property name="Password" value="12345678"/>
-        <property name="URL" value="jdbc:postgresql://localhost/portal"/>
-        <property name="driverClassname" value="org.postgresql.Driver"/>
+            <property name="serverName" value="localhost"/>
+            <property name="portNumber" value="5432"/>
+            <property name="databaseName" value="portal"/>
+            <property name="User" value="postgres"/>
+            <property name="Password" value="12345678"/>
+            <property name="URL" value="jdbc:postgresql://localhost/portal"/>
+            <property name="driverClassname" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="jdbc/books" object-type="user" pool-name="books_bookspool"/>
 </resources>

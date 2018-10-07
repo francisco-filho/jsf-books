@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 @SessionScoped
 public class CategoryEditor implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static final Logger _logger =Logger.getLogger("CategoryEditor");
+    private static final Logger _logger = Logger.getLogger("CategoryEditor");
     private List<Category> categories;
     private List<Category> deletedCategories;
 
@@ -24,18 +24,18 @@ public class CategoryEditor implements Serializable {
     private CategoryService categoryService;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         categories = categoryService.findAll();
         deletedCategories = new ArrayList<>();
     }
 
-    public String addCategory(){
+    public String addCategory() {
         categories.add(new Category());
         return "";
     }
 
     public String deleteCategory(Category category) {
-        if (category.getId() >=0){
+        if (category.getId() >= 0) {
             deletedCategories.add(category);
         }
         _logger.log(Level.INFO, "Remove categories: {0}", deletedCategories);
@@ -50,17 +50,15 @@ public class CategoryEditor implements Serializable {
         this.categories = _categories;
     }
 
-    public String save(){
+    public String save() {
         for (Category c : categories) {
             categoryService.save(c);
         }
-        for (Category d: deletedCategories){
+        for (Category d : deletedCategories) {
             categoryService.delete(d);
         }
         deletedCategories = new ArrayList<>();
         _logger.log(Level.INFO, "Save categories: {0}", categories);
         return "";
     }
-
-
 }
